@@ -1,0 +1,18 @@
+{
+  "rilo": {
+    "twitch": 8,
+    "youtube": 9
+  },
+  "meloco": {
+    "twitch": 12,
+    "youtube": 13
+  },
+  "hatsuki": {
+    "twitch": 16,
+    "youtube": 17
+  },
+  "hakuzen": {
+    "twitch": 20,
+    "youtube": 21
+  }
+}

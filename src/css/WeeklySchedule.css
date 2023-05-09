@@ -1,0 +1,65 @@
+.weekly-schedule-wrapper {
+  padding: 80px;
+  width: 800px;
+  aspect-ratio: 4/3;
+  background-image: url('../images/weeklyTable.jpg');
+  background-size: cover;
+  border-radius: 8px;
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.weekly-schedule-table {  
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-top: 40px;
+  position: relative;
+}
+
+.member-schedule-wrapper {
+  height: 23%;
+}
+
+.member-schedule-list {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  margin: 8px 0;
+  padding: 0;
+}
+
+.member-schedule-list li {
+  flex: 1 1 0px;
+  width: 0;
+}
+
+.member-schedule-list li:not(:first-child) {
+  margin-left: 12px;
+}
+
+.member-card {
+  height: 100%;
+  background: grey;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.member-card-image {
+  object-fit: cover;
+  height: 100%;
+}
+
+.rilo .member-card,
+.meloco .member-card {
+  background-color: #f3c4d2;
+}
+
+.hatsuki .member-card,
+.hakuzen .member-card {
+  background-color: #94e4f5;
+}
