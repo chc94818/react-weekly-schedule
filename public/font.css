@@ -1,0 +1,20 @@
+@font-face {
+  font-family: "han";
+  src: url("./han.ttf");
+  unicode-range: U+4E00-9FFF
+}
+
+@font-face {
+  font-family: "gen";
+  src: url("./gen.ttf");
+}
+
+@font-face {
+  font-family: "jp-custom";
+  src: url("./jp-custom.ttf");
+}
+
+@font-face {
+  font-family: "hua";
+  src: url("./hua.ttf");
+}

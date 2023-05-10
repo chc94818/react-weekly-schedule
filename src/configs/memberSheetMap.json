@@ -1,11 +1,11 @@
 {
+  "melco": {
+    "twitch": 12,
+    "youtube": 13
+  },
   "rilo": {
     "twitch": 8,
     "youtube": 9
-  },
-  "meloco": {
-    "twitch": 12,
-    "youtube": 13
   },
   "hatsuki": {
     "twitch": 16,

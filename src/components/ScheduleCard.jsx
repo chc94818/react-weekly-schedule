@@ -5,7 +5,7 @@ function ScheduleCard({cardData}) {
   const content = twitch || youtube || ''
   return (
     <div className="member-card">
-      <div className="member-card-content">
+      <div className="member-card-content" data-storke={content}>
         {content}
       </div>
     </div>

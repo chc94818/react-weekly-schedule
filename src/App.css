@@ -1,3 +1,7 @@
+.App div {
+  font-family: gen, hua, jp-custom;
+}
+
 .App {
   text-align: center;
   position: relative;

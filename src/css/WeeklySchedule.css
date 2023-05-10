@@ -1,6 +1,6 @@
 .weekly-schedule-wrapper {
-  padding: 80px;
-  width: 800px;
+  padding: 90px 100px;
+  width: 1200px;
   aspect-ratio: 4/3;
   background-image: url('../images/weeklyTable.jpg');
   background-size: cover;
@@ -8,58 +8,139 @@
   position: relative;
   overflow: hidden;
   box-sizing: border-box;
+  display: flex;
+  align-items: end;
 }
 
-.weekly-schedule-table {  
-  height: 400px;
+.weekly-schedule-table {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  margin-top: 40px;
   position: relative;
+  width: 100%;
+  height: 563px;
+}
+
+.weekly-schedule-period-wrapper {
+  display: flex;
+  position: absolute;
+  right: 0;
+  font-size: 56px;
+  color: white;
+  top: 160px;
+  right: 160px;
+}
+
+.weekly-schedule-table-header-wrapper {
+  margin-bottom: 10px;
+}
+
+.weekly-schedule-table-header-list {
+  display: flex;
+  flex-direction: row;
+  padding: 0;
+  margin: 0;
+}
+
+.weekly-schedule-table-header-list li{
+  color: #56d5ef;
+  /* -webkit-text-stroke: 1px white; */
+  font-size: 20px;
+}
+
+.weekly-schedule-table-header-list .saturday,
+.weekly-schedule-table-header-list .sunday {
+  color: #ffa2b6;
 }
 
 .member-schedule-wrapper {
-  height: 23%;
+  height: 125px;
+  margin-bottom: 8px;
 }
 
 .member-schedule-list {
   display: flex;
   flex-direction: row;
   height: 100%;
-  margin: 8px 0;
   padding: 0;
+  margin: 0;
 }
 
-.member-schedule-list li {
-  flex: 1 1 0px;
+.member-schedule-list li,
+.weekly-schedule-table-header-list li {
+  position: relative;
+  flex: 1 1 0;
   width: 0;
+  z-index: 0;
 }
 
-.member-schedule-list li:not(:first-child) {
+.weekly-schedule-table-header-list li::before {
+  content: attr(data-storke);
+  position: absolute;
+  width: 100%;
+  color: transparent;
+  left: 0;
+  z-index: -1;
+  -webkit-text-stroke: 2px white;
+}
+
+
+.member-card-content {
+  color: white;
+  z-index: 0;
+  /* -webkit-text-stroke: 2px black; */
+  font-size: 20px;
+  line-height: 1.2;
+  position: relative;
+}
+
+.member-card-content::before {
+  content: attr(data-storke);
+  position: absolute;
+  width: 100%;
+  color: transparent;
+  left: 0;
+  z-index: -1;
+  -webkit-text-stroke: 3.5px black;
+}
+
+
+.member-schedule-list li:not(:first-child),
+.weekly-schedule-table-header-list li:not(:first-child) {
   margin-left: 12px;
 }
 
 .member-card {
   height: 100%;
-  background: grey;
+  background: transparent;
   border-radius: 8px;
   display: flex;
   justify-content: center;
   align-items: center;
+  border: 2px solid white;
+  box-sizing: border-box;
+}
+
+.member-card.member {
+  border-width: 0px;
+  background: transparent !important;
 }
 
 .member-card-image {
   object-fit: cover;
   height: 100%;
+  width: 100%;
 }
 
 .rilo .member-card,
-.meloco .member-card {
+.melco .member-card {
   background-color: #f3c4d2;
 }
 
 .hatsuki .member-card,
 .hakuzen .member-card {
   background-color: #94e4f5;
+}
+
+.break .member-card {
+  background-color: #e3f5e6 !important;
 }
