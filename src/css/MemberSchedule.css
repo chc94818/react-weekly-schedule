@@ -1,0 +1,23 @@
+.member-schedule-wrapper {
+  height: 125px;
+  margin-bottom: 8px;
+}
+
+.member-schedule-list {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+.member-schedule-list li {
+  position: relative;
+  flex: 1 1 0;
+  width: 0;
+  z-index: 0;
+}
+
+.member-schedule-list li:not(:first-child) {
+  margin-left: 12px;
+}

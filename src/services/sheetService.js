@@ -4,10 +4,10 @@ import MEMBER_SHEET_MAP from "../configs/memberSheetMap.json";
 // Config variables
 const SPREADSHEET_DOC_ID = process.env.REACT_APP_GOOGLE_SPREADSHEET_DOC_ID;
 const SPREADSHEET_SHEET_ID = process.env.REACT_APP_GOOGLE_SPREADSHEET_SHEET_ID;
-const PRIVATE_KEY_ID = process.env.REACT_APP_GOOGLE_SERVICE_PRIVATE_KEY_ID;
+// const PRIVATE_KEY_ID = process.env.REACT_APP_GOOGLE_SERVICE_PRIVATE_KEY_ID;
 const PRIVATE_KEY = process.env.REACT_APP_GOOGLE_SERVICE_PRIVATE_KEY;
 const CLIENT_EMAIL = process.env.REACT_APP_GOOGLE_SERVICE_CLIENT_EMAIL;
-const CLIENT_ID = process.env.REACT_APP_GOOGLE_SERVICE_CLIENT_ID;
+// const CLIENT_ID = process.env.REACT_APP_GOOGLE_SERVICE_CLIENT_ID;
 const doc = new GoogleSpreadsheet(SPREADSHEET_DOC_ID);
 
 const readSpreadsheet = async () => {

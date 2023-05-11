@@ -1,8 +1,6 @@
 import React from 'react';
-import '../css/WeeklySchedule.css';
 import MemberSchedule from './MemberSchedule';
 import WEEK_HEADER from '../configs/daysOfWeekMap.json';
-
 
 function WeeklySchedule({scheduleData, selectDate}) {
   const weekHeaders = Object.keys(WEEK_HEADER).map((day, index) => {
