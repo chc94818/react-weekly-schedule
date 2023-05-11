@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './App.css';
 import { readSpreadsheet } from './services/sheetService';
 import { transformScheduleData, getWeeklySchedule, getScheduledMondayIndex } from './utils/utils';
 import WeeklySchedule from './components/WeeklySchedule';
-
+import html2canvas from 'html2canvas'
 
 function App() {
   const [scheduleData, setScheduleData] = useState([]);
@@ -20,11 +20,31 @@ function App() {
     getSheet();
   }, []);
 
+
+  const refPhoto = useRef(null);
+  const handleTakeCanvas = () => {
+      html2canvas(refPhoto.current).then(function (canvas) {
+          const periodString = selectDate.mondayString + "-" +selectDate.sundayString;
+          const dataUrl = canvas.toDataURL('image/png')
+          const link = document.createElement('a')
+          link.download = `weekly_schedule_${periodString}.png`
+          link.href = dataUrl
+          link.click()
+      });
+  }
+
   const weeklySchedule = getWeeklySchedule(scheduleData, selectDate.matchIndex);
   const memberWeeklySchedule = transformScheduleData(weeklySchedule);
   return (
     <div className="App">
-      <WeeklySchedule scheduleData={memberWeeklySchedule} selectDate={selectDate} />
+      <div class="control-panel-wrapper">
+        <div class="control-panel">
+          <button onClick={handleTakeCanvas}>Download image</button>
+        </div>
+      </div>
+      <div className='weekly-schedule-wrapper'>
+        <WeeklySchedule ref={refPhoto} scheduleData={memberWeeklySchedule} selectDate={selectDate} />
+      </div>
     </div>
   );
 }

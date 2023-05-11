@@ -1,9 +1,15 @@
 @import "./css/colors.css";
+@import "./css/controlPanel.css";
 @import "./css/MemberSchedule.css";
 @import "./css/WeeklySchedule.css";
 @import "./css/ScheduleCard.css";
 
-.App div {
+#root {
+  min-width: 100vw;
+  min-height: 100vh;
+}
+
+.App * {
   font-family: gen, hua, jp-custom;
 }
 
@@ -14,9 +20,8 @@
   background-color: #282c34;
   min-height: 100vh;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  flex-direction: row;
+  justify-content: space-evenly;
 }
 
 .App-logo {

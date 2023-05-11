@@ -2,7 +2,7 @@ import React from 'react';
 import MemberSchedule from './MemberSchedule';
 import WEEK_HEADER from '../configs/daysOfWeekMap.json';
 
-function WeeklySchedule({scheduleData, selectDate}) {
+const WeeklySchedule = React.forwardRef(({scheduleData, selectDate}, ref) => {
   const weekHeaders = Object.keys(WEEK_HEADER).map((day, index) => {
     return (
       <li key={index} className={day} data-storke={WEEK_HEADER[day]}>
@@ -20,7 +20,7 @@ function WeeklySchedule({scheduleData, selectDate}) {
   })
   const periodString = selectDate.mondayString + "-" +selectDate.sundayString;
   return (
-    <div className="weekly-schedule-wrapper">
+    <div className="weekly-schedule" ref={ref}>
       <div className="weekly-schedule-period-wrapper">
         <span>{periodString}</span>
       </div>
@@ -34,7 +34,7 @@ function WeeklySchedule({scheduleData, selectDate}) {
       </div>
     </div>
   );
-}
+});
 
 export default WeeklySchedule;
 
