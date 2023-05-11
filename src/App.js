@@ -37,8 +37,8 @@ function App() {
   const memberWeeklySchedule = transformScheduleData(weeklySchedule);
   return (
     <div className="App">
-      <div class="control-panel-wrapper">
-        <div class="control-panel">
+      <div className="control-panel-wrapper">
+        <div className="control-panel">
           <button onClick={handleTakeCanvas}>Download image</button>
         </div>
       </div>
