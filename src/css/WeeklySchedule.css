@@ -37,9 +37,13 @@
   position: absolute;
   font-size: 56px;
   color: white;
-  top: 160px;
-  right: 160px;
+  top: 170px;
+  right: 95px;
   text-shadow: 2px 2px 4px var(--blue-shadow);
+}
+
+.weekly-schedule-period-wrapper span {
+  font-family: hua;
 }
 
 .weekly-schedule-table-header-wrapper {
