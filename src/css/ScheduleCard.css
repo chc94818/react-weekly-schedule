@@ -27,6 +27,7 @@
   align-items: center;
   border: 2px solid white;
   box-sizing: border-box;
+  cursor: pointer;
 }
 
 .large .member-card-content {

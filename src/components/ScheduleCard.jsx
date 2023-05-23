@@ -1,6 +1,5 @@
-import React from 'react';
 import REST_KEYWORDS from '../configs/restKeyword.json';
-
+import React, { useState } from 'react';
 const CONTENT_SIZE = {
   small: 10,
   medium: 10,
@@ -10,9 +9,14 @@ const CONTENT_SIZE = {
 function ScheduleCard({cardData}) {
   const {twitch, youtube} = cardData || {}
   const content = twitch || youtube || ''
-  const isRestDay = REST_KEYWORDS.some((keyword) => {
+  const hasRestKeyword = REST_KEYWORDS.some((keyword) => {
     return content.includes(keyword);
   })
+  const [isRestDay, setIsRestDay] = useState(hasRestKeyword);
+
+  const onCardClickHandler = () => {
+    setIsRestDay(!isRestDay);
+  }
   
   let contentSize = 'small';
   Object.keys(CONTENT_SIZE).forEach(key => {
@@ -34,7 +38,7 @@ function ScheduleCard({cardData}) {
   });
 
   return (
-    <div className={`member-card ${contentSize} ${isRestDay ? "rest-day" : ""}`}>
+    <div onClick={onCardClickHandler} className={`member-card ${contentSize} ${isRestDay ? "rest-day" : ""}`}>
       {contentNodes}
     </div>
   );
