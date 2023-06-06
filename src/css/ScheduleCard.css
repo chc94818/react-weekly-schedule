@@ -4,6 +4,7 @@
   /* -webkit-text-stroke: 2px black; */
   font-size: 20px;
   line-height: 1.3;
+  min-height: 1.3em;
   position: relative;
 }
 
@@ -28,6 +29,12 @@
   border: 2px solid white;
   box-sizing: border-box;
   cursor: pointer;
+}
+
+
+.member-card textarea{
+  display: none;
+  resize: none;
 }
 
 .large .member-card-content {
@@ -67,4 +74,12 @@
 .member-card.rest-day {
   background-color: var(--green-light-alpha);
   color: var(--blue-light);
+}
+
+.editing .member-card-content {
+  display: none;
+}
+
+.editing textarea {
+  display: block;
 }
