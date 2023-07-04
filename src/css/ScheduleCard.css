@@ -15,10 +15,19 @@
   color: transparent;
   left: 0;
   z-index: -1;
-  -webkit-text-stroke: 5px white;
+  -webkit-text-stroke: 5px black;
 }
 
 /* platform color */
+/* text (default) */
+.member-card-content.text {
+  /* color: #282828 ; */
+}
+
+.member-card-content.text::before {
+  -webkit-text-stroke-color: black;
+}
+
 /* twitch */
 .member-card-content.twitch {
   /* color: #9147ff; */

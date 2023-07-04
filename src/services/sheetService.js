@@ -1,8 +1,7 @@
 import { GoogleSpreadsheet } from "google-spreadsheet";
 import LIVE_PLATFORMS from "../configs/platform.json";
 import MEMBER_SHEET_MAP from "../configs/memberSheetMap.json";
-import { getHalfWidthValue } from "../utils/utils";
-
+import { getHalfWidthValue, hasRestKeyword } from "../utils/utils";
 // Config variables
 const SPREADSHEET_DOC_ID = process.env.REACT_APP_GOOGLE_SPREADSHEET_DOC_ID;
 const SPREADSHEET_SHEET_ID = process.env.REACT_APP_GOOGLE_SPREADSHEET_SHEET_ID;
@@ -33,9 +32,14 @@ const readSpreadsheet = async () => {
       daySchedule.date = sheet.getCell(1, colIndex)._rawData.formattedValue
       Object.keys(MEMBER_SHEET_MAP).forEach(member => {
         const memberSchedule = {};
+        memberSchedule['text'] = '';
         LIVE_PLATFORMS.forEach(platform => {
           const platformRowIndex = MEMBER_SHEET_MAP[member][platform];
           memberSchedule[platform] = getHalfWidthValue(sheet.getCell(platformRowIndex, colIndex)._rawData.formattedValue)
+          if(hasRestKeyword(memberSchedule[platform])) {
+            memberSchedule['text'] = memberSchedule[platform];
+            memberSchedule[platform] = '';
+          }
         })
         daySchedule[member] = memberSchedule;
       });
@@ -46,11 +50,5 @@ const readSpreadsheet = async () => {
     console.error('Error: ', e);
   }
 };
-
-
-
-
-
-
 
 export { readSpreadsheet }

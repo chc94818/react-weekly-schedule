@@ -1,4 +1,4 @@
-import REST_KEYWORDS from '../configs/restKeyword.json';
+import { hasRestKeyword } from "../utils/utils";
 import React, { useState } from 'react';
 const CONTENT_SIZE = {
   small: 10,
@@ -21,18 +21,50 @@ const preprocessContent = (content) => {
   }).join('');
 }
 
+const transformContentWithTag = ({content, tag = 'youtube'}) => {
+  let transformedContent = ''
+  switch(tag) {
+    case 'youtube':
+      transformedContent = '[YT]: ' + content;
+      break;
+    case 'twitch':
+      transformedContent = '[TW]: ' + content;
+      break;
+    default:
+      transformedContent = '[TXT]: ' + content;
+      break;
+  }
+
+  if(transformedContent[transformedContent.length-1] !== '\n') {
+    transformedContent += '\n';
+  }
+
+  return transformedContent;
+}
+
+const parseContentsFromTag = (content) => {
+  const youtubeIndex = content.indexOf('[YT]: ');
+  const textIndex = content.indexOf('[TXT]: ');
+  const twitchContent = content.slice(0, youtubeIndex).replaceAll('[TW]: ', '');
+  const youtubeContent = content.slice(youtubeIndex, textIndex).replaceAll('[YT]: ', '');
+  const textContent = content.slice(textIndex).replaceAll('[TXT]: ', '');
+  return { twitchContent, youtubeContent, textContent};
+}
+
 function ScheduleCard({cardData}) {
-  const {twitch, youtube} = cardData || {};
+  const {twitch, youtube, text} = cardData || {};
   const twitchContent = twitch || '';
   const youtubeContent = youtube || '';
+  const textContent = text || '';
   const preprocessedTwitchContentContents = preprocessContent(twitchContent);
   const preprocessedYoutubeContents = preprocessContent(youtubeContent);
+  const preprocessedTextContents = preprocessContent(textContent);
+  
   const [twitchCardContent, setTwitchCardContent] = useState(preprocessedTwitchContentContents);
   const [youtubeCardContent, setYoutubeCardContent] = useState(preprocessedYoutubeContents);
-  const hasRestKeyword = REST_KEYWORDS.some((keyword) => {
-    return twitchCardContent.includes(keyword) || youtubeCardContent.includes(keyword);
-  })
-  const [isRestDay, setIsRestDay] = useState(hasRestKeyword);
+  const [textCardContent, setTextCardContent] = useState(preprocessedTextContents);
+  const textHasRestKeyword = hasRestKeyword(textCardContent);
+  const [isRestDay, setIsRestDay] = useState(textHasRestKeyword);
   const [isEdit, setIsEdit] = useState(false);
   
   const onCardClickHandler = (event) => {
@@ -45,38 +77,11 @@ function ScheduleCard({cardData}) {
     }
   }
 
-  const transformContentWithTag = ({content, tag = 'youtube'}) => {
-    let transformedContent = ''
-    switch(tag) {
-      case 'youtube':
-        transformedContent = '[YT]: ' + content;
-        break;
-      case 'twitch':
-        transformedContent = '[TW]: ' + content;
-        break;
-      default:
-        transformedContent = '[ALL]: ' + content;
-        break;
-    }
-
-    if(transformedContent[transformedContent.length-1] !== '\n') {
-      transformedContent += '\n';
-    }
-
-    return transformedContent;
-  }
-
-  const parseContentsFromTag = (content) => {
-    const youtubeIndex = content.indexOf('[YT]: ');
-    const twitchContent = content.slice(0, youtubeIndex).replaceAll('[TW]: ', '');
-    const youtubeContent = content.slice(youtubeIndex).replaceAll('[YT]: ', '');
-    return { twitchContent, youtubeContent};
-  }
-
   const onEditTextHandler = (event) => {
-    const { twitchContent = '', youtubeContent = ''} = parseContentsFromTag(event.target.value) || {};
+    const { twitchContent = '', youtubeContent = '', textContent = ''} = parseContentsFromTag(event.target.value) || {};
     setTwitchCardContent(twitchContent);
     setYoutubeCardContent(youtubeContent);
+    setTextCardContent(textContent)
   }
 
   // edit done
@@ -114,9 +119,21 @@ function ScheduleCard({cardData}) {
     )
   });
 
+  const textContentNodes = textCardContent
+  .split(/\n/)
+  .filter(text=>text)
+  .map((splitContent, index) => {
+    return (
+      <span key={index} className="member-card-content text" data-storke={splitContent}>
+        {splitContent}
+      </span>
+    )
+  });
+
   const textareaContent = 
     transformContentWithTag({content: twitchCardContent, tag: 'twitch'}) +
-    transformContentWithTag({content: youtubeCardContent, tag: 'youtube'});
+    transformContentWithTag({content: youtubeCardContent, tag: 'youtube'}) +
+    transformContentWithTag({content: textCardContent, tag: 'text'});
 
   return (
     <div 
@@ -132,6 +149,7 @@ function ScheduleCard({cardData}) {
       <textarea cols="12" rows="10" value={textareaContent} onChange={onEditTextHandler}></textarea>
       {twitchContentNodes}
       {youtubeContentNodes}
+      {textContentNodes}
     </div>
   );
 }

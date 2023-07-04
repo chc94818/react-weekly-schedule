@@ -1,5 +1,6 @@
 // import LIVE_PLATFORMS from "../configs/platform.json";
 import MEMBER_SHEET_MAP from "../configs/memberSheetMap.json";
+import REST_KEYWORDS from '../configs/restKeyword.json';
 
 const transformScheduleData = (scheduleData = []) => {
   if(scheduleData.length < 1) {
@@ -54,4 +55,8 @@ const getHalfWidthValue = (text = '') => {
       .replace(/\u3000/g, '\u0020');
 }
 
-export { transformScheduleData, getWeeklySchedule, getScheduledMondayIndex, getHalfWidthValue };
+const hasRestKeyword = (content = '') => {
+  return REST_KEYWORDS.some((keyword) => content.includes(keyword));
+}
+
+export { transformScheduleData, getWeeklySchedule, getScheduledMondayIndex, getHalfWidthValue, hasRestKeyword };
