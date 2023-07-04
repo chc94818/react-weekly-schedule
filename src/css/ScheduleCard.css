@@ -15,8 +15,28 @@
   color: transparent;
   left: 0;
   z-index: -1;
-  -webkit-text-stroke: 3.5px black;
+  -webkit-text-stroke: 5px white;
 }
+
+/* platform color */
+/* twitch */
+.member-card-content.twitch {
+  /* color: #9147ff; */
+}
+
+.member-card-content.twitch::before {
+  -webkit-text-stroke-color: #9147ff;
+}
+
+/* youtube */
+.member-card-content.youtube {
+  /* color: #282828 ; */
+}
+
+.member-card-content.youtube::before {
+  -webkit-text-stroke-color: #ff0000;
+}
+
 
 .member-card {
   height: 100%;

@@ -23,11 +23,14 @@ const preprocessContent = (content) => {
 
 function ScheduleCard({cardData}) {
   const {twitch, youtube} = cardData || {};
-  const content = twitch || youtube || '';
-  const preprocessedContents = preprocessContent(content);
-  const [cardContent, setCardContent] = useState(preprocessedContents);
+  const twitchContent = twitch || '';
+  const youtubeContent = youtube || '';
+  const preprocessedTwitchContentContents = preprocessContent(twitchContent);
+  const preprocessedYoutubeContents = preprocessContent(youtubeContent);
+  const [twitchCardContent, setTwitchCardContent] = useState(preprocessedTwitchContentContents);
+  const [youtubeCardContent, setYoutubeCardContent] = useState(preprocessedYoutubeContents);
   const hasRestKeyword = REST_KEYWORDS.some((keyword) => {
-    return cardContent.includes(keyword);
+    return twitchCardContent.includes(keyword) || youtubeCardContent.includes(keyword);
   })
   const [isRestDay, setIsRestDay] = useState(hasRestKeyword);
   const [isEdit, setIsEdit] = useState(false);
@@ -42,8 +45,38 @@ function ScheduleCard({cardData}) {
     }
   }
 
+  const transformContentWithTag = ({content, tag = 'youtube'}) => {
+    let transformedContent = ''
+    switch(tag) {
+      case 'youtube':
+        transformedContent = '[YT]: ' + content;
+        break;
+      case 'twitch':
+        transformedContent = '[TW]: ' + content;
+        break;
+      default:
+        transformedContent = '[ALL]: ' + content;
+        break;
+    }
+
+    if(transformedContent[transformedContent.length-1] !== '\n') {
+      transformedContent += '\n';
+    }
+
+    return transformedContent;
+  }
+
+  const parseContentsFromTag = (content) => {
+    const youtubeIndex = content.indexOf('[YT]: ');
+    const twitchContent = content.slice(0, youtubeIndex).replaceAll('[TW]: ', '');
+    const youtubeContent = content.slice(youtubeIndex).replaceAll('[YT]: ', '');
+    return { twitchContent, youtubeContent};
+  }
+
   const onEditTextHandler = (event) => {
-    setCardContent(event.target.value);
+    const { twitchContent = '', youtubeContent = ''} = parseContentsFromTag(event.target.value) || {};
+    setTwitchCardContent(twitchContent);
+    setYoutubeCardContent(youtubeContent);
   }
 
   // edit done
@@ -52,22 +85,38 @@ function ScheduleCard({cardData}) {
   }
   
   let contentSize = 'small';
+  const contentLength = twitchCardContent.length + youtubeCardContent.length;
   Object.keys(CONTENT_SIZE).forEach(key => {
-    if (content.length > CONTENT_SIZE[key]) {
+    if (contentLength > CONTENT_SIZE[key]) {
       contentSize = key;
     }
   })
 
-  const contentNodes = cardContent
+  const twitchContentNodes = twitchCardContent
     .split(/\n/)
     .filter(text=>text)
     .map((splitContent, index) => {
       return (
-        <span key={index} className="member-card-content" data-storke={splitContent}>
+        <span key={index} className="member-card-content twitch" data-storke={splitContent}>
           {splitContent}
         </span>
       )
     });
+
+  const youtubeContentNodes = youtubeCardContent
+  .split(/\n/)
+  .filter(text=>text)
+  .map((splitContent, index) => {
+    return (
+      <span key={index} className="member-card-content youtube" data-storke={splitContent}>
+        {splitContent}
+      </span>
+    )
+  });
+
+  const textareaContent = 
+    transformContentWithTag({content: twitchCardContent, tag: 'twitch'}) +
+    transformContentWithTag({content: youtubeCardContent, tag: 'youtube'});
 
   return (
     <div 
@@ -77,10 +126,12 @@ function ScheduleCard({cardData}) {
       className={`
         member-card ${contentSize}
         ${isRestDay ? "rest-day" : ""}
-        ${isEdit ? "editing" : ""}`
-      }>
-       <textarea cols="12" rows="10" value={cardContent} onChange={onEditTextHandler}></textarea>
-      {contentNodes}
+        ${isEdit ? "editing" : ""}
+      `}
+    >
+      <textarea cols="12" rows="10" value={textareaContent} onChange={onEditTextHandler}></textarea>
+      {twitchContentNodes}
+      {youtubeContentNodes}
     </div>
   );
 }
