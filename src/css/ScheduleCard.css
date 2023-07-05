@@ -1,14 +1,29 @@
+.member-card-content-wrapper:not(:last-child) {
+  margin-bottom: 0.3em;
+}
+
 .member-card-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.member-card-content > * {
+  flex-shrink: 0;
+}
+
+.member-card-text {
   color: white;
   z-index: 0;
   /* -webkit-text-stroke: 2px black; */
-  font-size: 20px;
-  line-height: 1.3;
-  min-height: 1.3em;
+  font-size: 1em;
+  line-height: 1.5;
+  min-height: 1.5em;
   position: relative;
+  display: inline-block;
 }
 
-.member-card-content::before {
+.member-card-text::before {
   content: attr(data-storke);
   position: absolute;
   width: 100%;
@@ -20,29 +35,29 @@
 
 /* platform color */
 /* text (default) */
-.member-card-content.text {
+.text .member-card-text {
   /* color: #282828 ; */
 }
 
-.member-card-content.text::before {
+.text .member-card-text::before {
   -webkit-text-stroke-color: black;
 }
 
 /* twitch */
-.member-card-content.twitch {
+.twitch .member-card-text {
   /* color: #9147ff; */
 }
 
-.member-card-content.twitch::before {
+.twitch .member-card-text::before {
   -webkit-text-stroke-color: #9147ff;
 }
 
 /* youtube */
-.member-card-content.youtube {
+.youtube .member-card-text {
   /* color: #282828 ; */
 }
 
-.member-card-content.youtube::before {
+.youtube .member-card-text::before {
   -webkit-text-stroke-color: #ff0000;
 }
 
@@ -67,15 +82,15 @@
 }
 
 .large .member-card-content {
-  font-size: 18px;
+  font-size: 14px;
 }
 
 .medium .member-card-content {
-  font-size: 20px;
+  font-size: 16px;
 }
 
 .small .member-card-content {
-  font-size: 20px;
+  font-size: 16px;
 }
 
 
@@ -111,4 +126,17 @@
 
 .editing textarea {
   display: block;
+}
+
+.text-logo-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 0.2em;
+  height: 1.5em;
+}
+
+.platform-logo {
+  width: 90%;
+  height: 90%;
 }

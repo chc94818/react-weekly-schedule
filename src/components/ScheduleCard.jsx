@@ -1,5 +1,20 @@
 import { hasRestKeyword } from "../utils/utils";
 import React, { useState } from 'react';
+import YoutubeSVG from './YoutubeSVG';
+import TwitchSVG from './TwitchSVG';
+import StrokeText from './StrokeText';
+const youtubeLogo = (
+  <div className='text-logo-container'>
+    <YoutubeSVG></YoutubeSVG>
+  </div>
+)
+
+const twitchLogo = (
+  <div className='text-logo-container'>
+    <TwitchSVG></TwitchSVG>
+  </div>
+)
+
 const CONTENT_SIZE = {
   small: 10,
   medium: 10,
@@ -102,9 +117,10 @@ function ScheduleCard({cardData}) {
     .filter(text=>text)
     .map((splitContent, index) => {
       return (
-        <span key={index} className="member-card-content twitch" data-storke={splitContent}>
-          {splitContent}
-        </span>
+        <div key={index} className="member-card-content twitch">
+          { index === 0 && twitchLogo}
+          <StrokeText text={splitContent}></StrokeText>
+        </div>
       )
     });
 
@@ -113,9 +129,10 @@ function ScheduleCard({cardData}) {
   .filter(text=>text)
   .map((splitContent, index) => {
     return (
-      <span key={index} className="member-card-content youtube" data-storke={splitContent}>
-        {splitContent}
-      </span>
+      <div key={index} className="member-card-content youtube">
+        { index === 0 && youtubeLogo}
+        <StrokeText text={splitContent}></StrokeText>
+      </div>
     )
   });
 
@@ -124,12 +141,15 @@ function ScheduleCard({cardData}) {
   .filter(text=>text)
   .map((splitContent, index) => {
     return (
-      <span key={index} className="member-card-content text" data-storke={splitContent}>
-        {splitContent}
-      </span>
+      <div key={index} className="member-card-content text">
+        <StrokeText text={splitContent}></StrokeText>
+      </div>
     )
   });
 
+  // if(!!youtubeContentNodes.length) youtubeContentNodes.unshift(youtubeLogo);
+  // if(!!twitchContentNodes.length) twitchContentNodes.unshift(twitchLogo);
+  
   const textareaContent = 
     transformContentWithTag({content: twitchCardContent, tag: 'twitch'}) +
     transformContentWithTag({content: youtubeCardContent, tag: 'youtube'}) +
@@ -147,9 +167,9 @@ function ScheduleCard({cardData}) {
       `}
     >
       <textarea cols="12" rows="10" value={textareaContent} onChange={onEditTextHandler}></textarea>
-      {twitchContentNodes}
-      {youtubeContentNodes}
-      {textContentNodes}
+      { !!twitchContentNodes.length && <div className="member-card-content-wrapper">{twitchContentNodes}</div>}
+      { !!youtubeContentNodes.length && <div className="member-card-content-wrapper">{youtubeContentNodes}</div>}
+      { !!textContentNodes.length && <div className="member-card-content-wrapper">{textContentNodes}</div>}
     </div>
   );
 }
