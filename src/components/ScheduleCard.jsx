@@ -17,8 +17,8 @@ const twitchLogo = (
 
 const CONTENT_SIZE = {
   small: 10,
-  medium: 10,
-  large: 12
+  medium: 14,
+  large: 20
 };
 
 // auto add space before JST
@@ -105,7 +105,7 @@ function ScheduleCard({cardData}) {
   }
   
   let contentSize = 'small';
-  const contentLength = twitchCardContent.length + youtubeCardContent.length;
+  const contentLength = twitchCardContent.length + youtubeCardContent.length + textContent.length;
   Object.keys(CONTENT_SIZE).forEach(key => {
     if (contentLength > CONTENT_SIZE[key]) {
       contentSize = key;
