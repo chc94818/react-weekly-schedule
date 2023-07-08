@@ -1,0 +1,32 @@
+.special-theme .weekly-schedule {
+  background-image: url('../images/weeklyTableSpecialTheme.jpg');
+}
+
+.special-theme .rilo .member-card,
+.special-theme .melco .member-card {
+  background-color: var(--pink-light-alpha);
+}
+
+.special-theme .hatsuki .member-card,
+.special-theme .hakuzen .member-card {
+  background-color: var(--blue-light-alpha-2);
+}
+
+.special-theme .member-card.rest-day {
+  background-color: var(--purple-light-alpha);
+}
+
+
+/* member card image */
+/* .special-theme .hatsuki .member-card-image {
+  content: url('../images/hatsuki-special.png');
+}
+
+.special-theme .hakuzen .member-card-image {
+  content: url('../images/hakuzen-special.png');
+} */
+
+.special-theme .hatsuki .member-card-image + span,
+.special-theme .hakuzen .member-card-image + span {
+  background-color: var(--blue-light-2);
+}

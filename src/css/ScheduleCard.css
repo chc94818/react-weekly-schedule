@@ -95,8 +95,10 @@
 
 
 .member-card.member {
-  border-width: 0px;
-  background: transparent !important;
+  /* border-width: 0px; */
+  position: relative;
+  overflow: hidden;
+  background: var(--blue-light-3) !important;
 }
 
 .member-card-image {
@@ -105,15 +107,30 @@
   width: 100%;
 }
 
+
+/* member card background color */
 .rilo .member-card,
 .melco .member-card {
   background-color: var(--pink-light-alpha);
 }
 
 .hatsuki .member-card,
-.hakuzen .member-card {
+.hakuzen .member-card{
   background-color: var(--blue-light-alpha);
 }
+
+
+/* member card name on image background color */
+.rilo .member-card-image + span,
+.melco .member-card-image + span {
+  background-color: var(--pink-light);
+}
+
+.hatsuki .member-card-image + span,
+.hakuzen .member-card-image + span {
+  background-color: var(--blue-light);
+}
+
 
 .member-card.rest-day {
   background-color: var(--green-light-alpha);
@@ -139,4 +156,14 @@
 .platform-logo {
   width: 90%;
   height: 90%;
+}
+
+.member-card-image + span {
+  position: absolute;
+  bottom: 0px;
+  border-radius: 8px 8px 0 0;
+  background-color: transparent;
+  color: white;
+  width: 100%;
+  line-height: 1.6;
 }

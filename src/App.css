@@ -3,6 +3,7 @@
 @import "./css/MemberSchedule.css";
 @import "./css/WeeklySchedule.css";
 @import "./css/ScheduleCard.css";
+@import "./css/SpecialTheme.css";
 
 #root {
   min-width: 100vw;

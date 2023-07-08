@@ -8,6 +8,7 @@ import html2canvas from 'html2canvas'
 function App() {
   const [scheduleData, setScheduleData] = useState([]);
   const [selectDate, setSelectDateIndex] = useState({matchIndex: 0, mondayString: '01.01', sundayString: '01.07'});
+  const [enableSpecialTheme, setEnableSpecialTheme] = useState(false);
 
   useEffect(() => {
     const getSheet = async () => {
@@ -33,6 +34,10 @@ function App() {
       });
   }
 
+  const handleThemeChange = (event) => {
+    setEnableSpecialTheme(event.currentTarget.checked)
+  }
+
   const weeklySchedule = getWeeklySchedule(scheduleData, selectDate.matchIndex);
   const memberWeeklySchedule = transformScheduleData(weeklySchedule);
   return (
@@ -40,9 +45,16 @@ function App() {
       <div className="control-panel-wrapper">
         <div className="control-panel">
           <button onClick={handleTakeCanvas}>Download image</button>
+          <div className="theme-container">
+            <span>Theme</span>
+            <label className="switch">
+              <input type="checkbox" checked={enableSpecialTheme} onChange={handleThemeChange}/>
+              <span className="slider round"></span>
+            </label>
+          </div>
         </div>
       </div>
-      <div className='weekly-schedule-wrapper'>
+      <div className={`weekly-schedule-wrapper ${enableSpecialTheme ? 'special-theme' : ''}`}>
         <WeeklySchedule ref={refPhoto} scheduleData={memberWeeklySchedule} selectDate={selectDate} />
       </div>
     </div>
