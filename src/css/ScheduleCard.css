@@ -46,10 +46,13 @@
 /* mix (twitch + youtube) */
 .mix .member-card-text {
   /* color: #282828 ; */
+  padding: 0 2px;
 }
 
 .mix .member-card-text::before {
-  -webkit-text-stroke-color: black;
+  background: linear-gradient(270deg, #ff0000, #9147ff);
+  -webkit-background-clip: text;
+  -webkit-text-stroke-color: transparent;
 }
 
 /* twitch */
