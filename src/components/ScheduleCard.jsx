@@ -45,6 +45,9 @@ const transformContentWithTag = ({content, tag = 'youtube'}) => {
     case 'twitch':
       transformedContent = '[TW]: ' + content;
       break;
+    case 'mix':
+      transformedContent = '[MIX]: ' + content;
+      break;
     default:
       transformedContent = '[TXT]: ' + content;
       break;
@@ -59,24 +62,30 @@ const transformContentWithTag = ({content, tag = 'youtube'}) => {
 
 const parseContentsFromTag = (content) => {
   const youtubeIndex = content.indexOf('[YT]: ');
+  const mixIndex = content.indexOf('[MIX]: ');
   const textIndex = content.indexOf('[TXT]: ');
+
   const twitchContent = content.slice(0, youtubeIndex).replaceAll('[TW]: ', '');
-  const youtubeContent = content.slice(youtubeIndex, textIndex).replaceAll('[YT]: ', '');
+  const youtubeContent = content.slice(youtubeIndex, mixIndex).replaceAll('[YT]: ', '');
+  const mixContent = content.slice(mixIndex, textIndex).replaceAll('[MIX]: ', '');
   const textContent = content.slice(textIndex).replaceAll('[TXT]: ', '');
-  return { twitchContent, youtubeContent, textContent};
+  return { twitchContent, youtubeContent, mixContent, textContent};
 }
 
 function ScheduleCard({cardData}) {
-  const {twitch, youtube, text} = cardData || {};
+  const {twitch, youtube, mix, text} = cardData || {};
   const twitchContent = twitch || '';
   const youtubeContent = youtube || '';
+  const mixContent = mix || '';
   const textContent = text || '';
   const preprocessedTwitchContentContents = preprocessContent(twitchContent);
   const preprocessedYoutubeContents = preprocessContent(youtubeContent);
+  const preprocessedMixContents = preprocessContent(mixContent);
   const preprocessedTextContents = preprocessContent(textContent);
   
   const [twitchCardContent, setTwitchCardContent] = useState(preprocessedTwitchContentContents);
   const [youtubeCardContent, setYoutubeCardContent] = useState(preprocessedYoutubeContents);
+  const [mixCardContent, setMixCardContent] = useState(preprocessedMixContents);
   const [textCardContent, setTextCardContent] = useState(preprocessedTextContents);
   const textHasRestKeyword = hasRestKeyword(textCardContent);
   const [isRestDay, setIsRestDay] = useState(textHasRestKeyword);
@@ -93,9 +102,10 @@ function ScheduleCard({cardData}) {
   }
 
   const onEditTextHandler = (event) => {
-    const { twitchContent = '', youtubeContent = '', textContent = ''} = parseContentsFromTag(event.target.value) || {};
+    const { twitchContent = '', youtubeContent = '', mixContent = '', textContent = ''} = parseContentsFromTag(event.target.value) || {};
     setTwitchCardContent(twitchContent);
     setYoutubeCardContent(youtubeContent);
+    setMixCardContent(mixContent);
     setTextCardContent(textContent)
   }
 
@@ -105,7 +115,7 @@ function ScheduleCard({cardData}) {
   }
   
   let contentSize = 'small';
-  const contentLength = twitchCardContent.length + youtubeCardContent.length + textContent.length;
+  const contentLength = twitchCardContent.length + youtubeCardContent.length + mixCardContent.length + textContent.length;
   Object.keys(CONTENT_SIZE).forEach(key => {
     if (contentLength > CONTENT_SIZE[key]) {
       contentSize = key;
@@ -136,6 +146,22 @@ function ScheduleCard({cardData}) {
     )
   });
 
+  const mixContentNodes = mixCardContent
+  .split(/\n/)
+  .filter(text=>text)
+  .map((splitContent, index) => {
+    return (
+      <div key={index} className="member-card-content mix">
+        { index === 0 && (
+            <>
+              {twitchLogo}{youtubeLogo}
+            </>
+          )}
+        <StrokeText text={splitContent}></StrokeText>
+      </div>
+    )
+  });
+
   const textContentNodes = textCardContent
   .split(/\n/)
   .filter(text=>text)
@@ -153,6 +179,7 @@ function ScheduleCard({cardData}) {
   const textareaContent = 
     transformContentWithTag({content: twitchCardContent, tag: 'twitch'}) +
     transformContentWithTag({content: youtubeCardContent, tag: 'youtube'}) +
+    transformContentWithTag({content: mixCardContent, tag: 'mix'}) +
     transformContentWithTag({content: textCardContent, tag: 'text'});
 
   return (
@@ -169,6 +196,7 @@ function ScheduleCard({cardData}) {
       <textarea cols="12" rows="10" value={textareaContent} onChange={onEditTextHandler}></textarea>
       { !!twitchContentNodes.length && <div className="member-card-content-wrapper">{twitchContentNodes}</div>}
       { !!youtubeContentNodes.length && <div className="member-card-content-wrapper">{youtubeContentNodes}</div>}
+      { !!mixContentNodes.length && <div className="member-card-content-wrapper">{mixContentNodes}</div>}
       { !!textContentNodes.length && <div className="member-card-content-wrapper">{textContentNodes}</div>}
     </div>
   );

@@ -43,6 +43,15 @@
   -webkit-text-stroke-color: black;
 }
 
+/* mix (twitch + youtube) */
+.mix .member-card-text {
+  /* color: #282828 ; */
+}
+
+.mix .member-card-text::before {
+  -webkit-text-stroke-color: black;
+}
+
 /* twitch */
 .twitch .member-card-text {
   /* color: #9147ff; */
